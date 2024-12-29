@@ -19,7 +19,7 @@ const db = mysql.createConnection({
 
 app.post("/add_user", (req, res) => {
   const sql =
-    "INSERT INTO student_details (`name`,`email`,`age`,`gender`) VALUES (?, ?, ?, ?)";
+    "INSERT INTO account_details (`name`,`email`,`age`,`gender`) VALUES (?, ?, ?, ?)";
   const values = [req.body.name, req.body.email, req.body.age, req.body.gender];
   db.query(sql, values, (err, result) => {
     if (err)
@@ -28,17 +28,17 @@ app.post("/add_user", (req, res) => {
   });
 });
 
-app.get("/students", (req, res) => {
-  const sql = "SELECT * FROM student_details";
+app.get("/acccounts", (req, res) => {
+  const sql = "SELECT * FROM account_details";
   db.query(sql, (err, result) => {
     if (err) res.json({ message: "Server error" });
     return res.json(result);
   });
 });
 
-app.get("/get_student/:id", (req, res) => {
+app.get("/get_account/:id", (req, res) => {
   const id = req.params.id;
-  const sql = "SELECT * FROM student_details WHERE `id`= ?";
+  const sql = "SELECT * FROM account_details WHERE `id`= ?";
   db.query(sql, [id], (err, result) => {
     if (err) res.json({ message: "Server error" });
     return res.json(result);
@@ -48,7 +48,7 @@ app.get("/get_student/:id", (req, res) => {
 app.post("/edit_user/:id", (req, res) => {
   const id = req.params.id;
   const sql =
-    "UPDATE student_details SET `name`=?, `email`=?, `age`=?, `gender`=? WHERE id=?";
+    "UPDATE account_details SET `name`=?, `email`=?, `age`=?, `gender`=? WHERE id=?";
   const values = [
     req.body.name,
     req.body.email,
@@ -65,7 +65,7 @@ app.post("/edit_user/:id", (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
   const id = req.params.id;
-  const sql = "DELETE FROM student_details WHERE id=?";
+  const sql = "DELETE FROM account_details WHERE id=?";
   const values = [id];
   db.query(sql, values, (err, result) => {
     if (err)
